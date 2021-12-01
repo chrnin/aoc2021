@@ -12,8 +12,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      -uses: actions/checkout@v2
-      -name: Run tests day1
+      - uses: actions/checkout@v2
+      - name: Run tests day1
        run: |
-        cd day1
-        cargo test --verbose
+         cd day1
+         cargo test --verbose
