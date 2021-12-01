@@ -2,7 +2,7 @@ name: test
 
 on:
   push:
-    branches: [ main_]
+    branches: [ master ]
 
 env:
   CARGO_TERM_COLOR: always
@@ -10,7 +10,6 @@ env:
 jobs:
   test:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v2
       - name: Run tests day1
