@@ -16,10 +16,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Run tests day1
+      - name: Run all tests
         run: |
           for d in day*
-          do cd d
+          do cd $d
           cargo test --verbose
           cd ..
           done
