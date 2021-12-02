@@ -1,8 +1,12 @@
 name: test
 
 on:
-  [push, pull_resquest]:
-    branches: [ master ]
+  push:
+    branches:
+      - master
+  pull_resquest:
+    branches: 
+      - master
 
 env:
   CARGO_TERM_COLOR: always
