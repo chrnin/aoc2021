@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Run tests day1
+      - name: Run tests for all days
         run: |
           for d in day*
           do cd $d
