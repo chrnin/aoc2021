@@ -19,7 +19,7 @@ jobs:
       - name: Run tests day1
         run: |
           for d in day*
-          do cd d
+          do cd $d
           cargo test --verbose
           cd ..
           done
