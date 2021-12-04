@@ -12,8 +12,6 @@ fn first(input: String) -> i32 {
     for action in actions {
         tables = action_on_tables(tables.clone(), action);
         for table in tables.clone() {
-            println!("{:?}", tables);
-
             let check = check_table(table.clone());
             if check {
                 return sum(table) * action
@@ -26,11 +24,10 @@ fn first(input: String) -> i32 {
 fn second(input: String) -> i32 {
     let (actions, mut tables) = parse_input(input);
     let mut loser: usize = 0;
-    let mut i: usize = 0;
     for action in actions {
         let mut checks: i32 = 0;
+        let mut i: usize = 0;
         tables = action_on_tables(tables.clone(), action);
-        i = 0;
         for table in tables.clone() {
             let check = check_table(table.clone());
             if !check {
