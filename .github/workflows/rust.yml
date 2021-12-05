@@ -20,7 +20,7 @@ jobs:
         run: |
           for d in day*
           do cd $d
-          cargo test --verbose
+          RUST_MIN_STACK=4194304 cargo test --verbose
           cd ..
           done
 
