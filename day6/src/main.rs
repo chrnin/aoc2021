@@ -15,17 +15,12 @@ fn simul(input: String, days: usize) -> usize {
 }
 
 fn count(population: [usize;10]) -> usize {
-    let mut count = 0;
-    for i in 0..9 {
-        count += population[i]
-    }
-    return count
+    return population[0..9].iter().sum()
 }
 
 fn old(population: &mut [usize;10]) {
-    let day = population[9];
-    let p0 = population[(day)%7];
-    population[(day)%7] += population[7];
+    let p0 = population[(population[9])%7];
+    population[(population[9])%7] += population[7];
     population[7] = population[8];
     population[8] = p0;
     population[9] += 1;
@@ -33,7 +28,7 @@ fn old(population: &mut [usize;10]) {
 
 fn build_population(input: String) -> [usize;10] {
     let mut population: [usize;10] = [0;10];
-    let fishes: Vec<i32> = input.split(",").map(|f| {
+    let fishes: Vec<i32> = input[0..input.len()-1].split(",").map(|f| {
         f.parse().unwrap()}
     ).collect();
     for f in fishes {
