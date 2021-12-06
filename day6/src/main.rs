@@ -21,6 +21,7 @@ fn count(population: [usize;10]) -> usize {
     }
     return count
 }
+
 fn old(population: &mut [usize;10]) {
     let day = population[9];
     let p0 = population[(day)%7];
@@ -40,7 +41,6 @@ fn build_population(input: String) -> [usize;10] {
     }
     return population
 }
-
 
 fn read_input(filename: &str) -> String {
     let content = fs::read_to_string(filename).expect("lecture du fichier impossible");
