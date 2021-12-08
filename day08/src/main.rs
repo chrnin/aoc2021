@@ -226,12 +226,10 @@ mod tests {
     #[test]
     fn test_1() {
         assert_eq!(first("input_test"), 26);
-        assert_eq!(second("input_test"), 61229);
     }
 
     #[test]
     fn test_2() {
-        assert_eq!(first("input_test"), 26);
         assert_eq!(second("input_test"), 61229);
     }
 
