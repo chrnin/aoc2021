@@ -2,8 +2,8 @@ use std::collections::HashMap;
 use std::fs;
 
 fn main() {
-    println!("{}", first("input"));
-    println!("{}", second("input"));
+    println!("first: {}", first("input"));
+    println!("second: {}", second("input"));
 }
 
 fn first(input_file: &str) -> i32 {
@@ -30,9 +30,6 @@ fn second(input_file: &str) -> u32 {
         let number = convert_digits(line.to_string(), map);
         total += number
     }
-    
-    
-    println!("{:?}", total);
     return total;
 }
 
