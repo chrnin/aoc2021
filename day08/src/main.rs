@@ -21,6 +21,28 @@ fn first(input_file: &str) -> i32 {
     return count;
 }
 
+/* 
+    digit                 longueur
+        0  a b c   e f g  6
+        1      c     f    2
+        2  a   c d e   g  5
+        3  a   c d   f g  5
+        4    b c d   f    4
+        5  a b   d   f g  5
+        6  a b   d e f g  6
+        7  a   c     f    3
+        8  a b c d e f g  7
+        9  a b c d   f g  6
+
+    a = différence entre len(2,3)
+    f = seul segment permanent entre len(2,3,4,6)
+    c = seul segment permanent entre len(2,3,4,7) une fois retiré f
+    g = seul segment permanent entre len(5) et len(6) une fois retiré a
+    d = seul segment permanent en len(5) une fois retiré a et g 
+    b = segment différent entre len(1,4) une fois retiré d
+    e = lettre restante
+*/
+
 fn second(input_file: &str) -> u32 {
     let input = read_input(input_file);
     let mut total = 0;
@@ -229,5 +251,4 @@ mod tests {
     fn test_2() {
         assert_eq!(second("input_test"), 61229);
     }
-
 }
