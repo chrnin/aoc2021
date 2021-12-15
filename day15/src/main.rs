@@ -134,6 +134,6 @@ mod tests {
     }
     #[test]
     fn test_2() {
-        assert_eq!(second("input_test"), 316);
+        assert_eq!(second("input_test"), 315);
     }
 }
