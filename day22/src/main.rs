@@ -1,8 +1,8 @@
 use std::fs;
 
 fn main() {
-    println!("{}", first("input"));
-    println!("{}", second("input"));
+    println!("first: {}", first("input"));
+    println!("second: {}", second("input"));
 }
 
 #[derive(Debug, Clone)]
@@ -13,9 +13,9 @@ struct Instruction {
 
 fn first(filename: &str) -> i64 {
     let instructions = &read_input(filename);
-    let mut xs = vec!(-50,50);
-    let mut ys = vec!(-50,50);
-    let mut zs = vec!(-50,50);
+    let mut xs = vec![-50, 50];
+    let mut ys = vec![-50, 50];
+    let mut zs = vec![-50, 50];
     for instruction in instructions {
         xs.push(instruction.area[0][0]);
         xs.push(instruction.area[0][1]);
@@ -26,21 +26,38 @@ fn first(filename: &str) -> i64 {
     }
     xs.sort();
     xs.dedup();
-    xs = xs.iter().filter(|&&x| x>=-50 && x<=51).map(|&x| x).collect();
+    xs = xs
+        .iter()
+        .filter(|&&x| x >= -50 && x <= 51)
+        .map(|&x| x)
+        .collect();
     ys.sort();
     ys.dedup();
-    ys = ys.iter().filter(|&&x| x>=-50 && x<=51).map(|&x| x).collect();
+    ys = ys
+        .iter()
+        .filter(|&&x| x >= -50 && x <= 51)
+        .map(|&x| x)
+        .collect();
     zs.sort();
     zs.dedup();
-    zs = zs.iter().filter(|&&x| x>=-50 && x<=51).map(|&x| x).collect();
-    
+    zs = zs
+        .iter()
+        .filter(|&&x| x >= -50 && x <= 51)
+        .map(|&x| x)
+        .collect();
+
     let mut volume = 0;
     for x in lags(&xs) {
         for y in lags(&ys) {
             for z in lags(&zs) {
-                if let Some(i) = instructions.iter().rev().filter(|&i| inside(i.area, [x[0],y[0],z[0]])  ).next() {
+                if let Some(i) = instructions
+                    .iter()
+                    .rev()
+                    .filter(|&i| inside(i.area, [x[0], y[0], z[0]]))
+                    .next()
+                {
                     if i.on {
-                        volume += (x[1] - x[0])*(y[1] - y[0])*(z[1] - z[0]);
+                        volume += (x[1] - x[0]) * (y[1] - y[0]) * (z[1] - z[0]);
                     }
                 }
             }
@@ -68,14 +85,29 @@ fn second(filename: &str) -> i64 {
     ys.dedup();
     zs.sort();
     zs.dedup();
-    
+
     let mut volume = 0;
     for x in lags(&xs) {
+        let instructions_x: Vec<&Instruction> = instructions
+            .iter()
+            .rev()
+            .filter(|&i| x[0] >= i.area[0][0] && x[0] < i.area[0][1])
+            .collect();
         for y in lags(&ys) {
+            let instructions_y: Vec<&Instruction> = instructions_x
+                .iter()
+                .rev()
+                .filter(|&i| y[0] >= i.area[1][0] && y[0] < i.area[1][1]).map(|&i| i)
+                .collect();
             for z in lags(&zs) {
-                if let Some(i) = instructions.iter().rev().filter(|&i| inside(i.area, [x[0],y[0],z[0]])  ).next() {
+                if let Some(i) = instructions_y
+                    .iter()
+                    .rev()
+                    .filter(|&i| inside(i.area, [x[0], y[0], z[0]]))
+                    .next()
+                {
                     if i.on {
-                        volume += (x[1] - x[0])*(y[1] - y[0])*(z[1] - z[0]);
+                        volume += (x[1] - x[0]) * (y[1] - y[0]) * (z[1] - z[0]);
                     }
                 }
             }
@@ -124,7 +156,7 @@ mod tests {
     use super::*;
     #[test]
     fn test_1() {
-        assert_eq!(first("input_test"),590784);
+        assert_eq!(first("input_test"), 590784);
     }
     #[test]
     fn test_2() {
