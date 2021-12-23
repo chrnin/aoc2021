@@ -45,25 +45,7 @@ fn first(filename: &str) -> i64 {
         .filter(|&&x| x >= -50 && x <= 51)
         .map(|&x| x)
         .collect();
-
-    let mut volume = 0;
-    for x in lags(&xs) {
-        for y in lags(&ys) {
-            for z in lags(&zs) {
-                if let Some(i) = instructions
-                    .iter()
-                    .rev()
-                    .filter(|&i| inside(i.area, [x[0], y[0], z[0]]))
-                    .next()
-                {
-                    if i.on {
-                        volume += (x[1] - x[0]) * (y[1] - y[0]) * (z[1] - z[0]);
-                    }
-                }
-            }
-        }
-    }
-    volume
+    volume(xs, ys, zs, instructions)
 }
 
 fn second(filename: &str) -> i64 {
@@ -86,24 +68,28 @@ fn second(filename: &str) -> i64 {
     zs.sort();
     zs.dedup();
 
+    volume(xs, ys, zs, instructions)
+}
+
+fn volume(xs: Vec<i64>, ys: Vec<i64>, zs: Vec<i64>, instructions: &Vec<Instruction>) -> i64 {
     let mut volume = 0;
     for x in lags(&xs) {
         let instructions_x: Vec<&Instruction> = instructions
             .iter()
-            .rev()
             .filter(|&i| x[0] >= i.area[0][0] && x[0] < i.area[0][1])
             .collect();
         for y in lags(&ys) {
             let instructions_y: Vec<&Instruction> = instructions_x
                 .iter()
-                .rev()
-                .filter(|&i| y[0] >= i.area[1][0] && y[0] < i.area[1][1]).map(|&i| i)
+                .filter(|&i| y[0] >= i.area[1][0] && y[0] < i.area[1][1])
+                .map(|&i| i)
                 .collect();
             for z in lags(&zs) {
                 if let Some(i) = instructions_y
                     .iter()
                     .rev()
-                    .filter(|&i| inside(i.area, [x[0], y[0], z[0]]))
+                    .filter(|&i| z[0] >= i.area[2][0] && z[0] < i.area[2][1])
+                    .map(|&i| i)
                     .next()
                 {
                     if i.on {
@@ -114,15 +100,6 @@ fn second(filename: &str) -> i64 {
         }
     }
     volume
-}
-
-fn inside(b: [[i64; 2]; 3], a: [i64; 3]) -> bool {
-    a[0] >= b[0][0]
-        && a[0] < b[0][1]
-        && a[1] >= b[1][0]
-        && a[1] < b[1][1]
-        && a[2] >= b[2][0]
-        && a[2] < b[2][1]
 }
 
 fn lags<T: Clone>(vec: &Vec<T>) -> Vec<[T; 2]> {
